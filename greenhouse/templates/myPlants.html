@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+<!--<style>-->
+<!--  h1 {margin-top:100;}-->
+<!--</style>-->
+{% block heading %}
+myPlants page
+{% endblock %}
+
+{% block body %}
+<!--<a href="{{ url_for('index')}}"> index</a>-->
+<script defer src="static/js/pubnub.js"></script>
+<div class="containertable" >
+
+
+    <section>
+        <!-- display a table of players -->
+        <h1>My Plants</h1>
+        <table>
+            <tr>
+                <th>Image</th>
+                <th>Plant</th>
+                <th>Humidity</th>
+                <th>Temperature</th>
+                <th>Brightness</th>
+                <th>Soil Moisture</th>
+                <th>Water</th>
+                <th>Edit</th>
+            </tr>
+            <tr>
+                <td><img src="../static/images/tomato.jpg" width="100px" height="100px"></td>
+                <td id="name">Tomato</td>
+                <td id="humidity">humidity</td>
+                <td id="temperature">temperature</td>
+                <td id="brightness">brightness</td>
+                <td id="soilMoist" class="right">soilMoist</td>
+                <td>
+                        <input id="water_button" type="submit" value="Water" onclick="handleClick();">
+                </td>
+                <td>
+                    <form action="#" method="post" id="edit">
+                        <input id="edit_button" type="submit" value="Edit">
+                    </form>
+                </td>
+            </tr>
+        </table>
+        <!-- <p><a href="add_player_form.php">Add Record</a></p> -->
+        <!-- <p><a href="category_list.php">Manage Categories</a></p>
+        <p><a href="contact.php">Contact Us</a></p> -->
+
+    </section>
+</div>
+
+{% endblock %}
+
