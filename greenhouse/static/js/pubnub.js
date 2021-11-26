@@ -3,9 +3,10 @@ var heartbeatRate = 5000;
 
 var myChannel = "greenhouse"
 
+var request = new XMLHttpRequest();
 function keepAlive()
 {
-	var request = new XMLHttpRequest();
+
 	request.onreadystatechange = function(){
 		if(this.readyState === 4){
 			if(this.status === 200){
@@ -47,15 +48,21 @@ pubnub = new PubNub({
 //Does the UUID has to be the same ???
 
 let receivedMsg = { time: 121020211140,
-            temperature: 10.1,
-            humidity: 21.2,
+            temperature: 101,
+            humidity: 212,
             brightness: "light",
             soil: "wet"}
 
 
 pubnub.subscribe({channels: [myChannel]});
 
+function sendStats(receivedMsg)
+{
+    request.open("POST", "stats", true);
+	request.send(receivedMsg);
 
+}
+sendStats(receivedMsg)
 pubnub.addListener({
 
        message: function(msg) {
@@ -63,15 +70,9 @@ pubnub.addListener({
             receivedMsg.humidity = msg.message.humidity
             receivedMsg.brightness = msg.message.brightness
             receivedMsg.soil = msg.message.soil
-             updateStats(receivedMsg)
-        }
-
-//      function(presenceEvent) {
-//            // This is where you handle presence. Not important for now :)
-//        }
-
+             updateStats()
+            }
          }
-
       )
 
 function updateStats(receivedMsg)
