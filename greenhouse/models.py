@@ -50,13 +50,13 @@ class user_plant(db.Model):
         return f"User plant('{self.plant_id}', '{self.user_id}', '{self.plant_name}', '{self.watered}', '{self.planted}')"
 
 class plant_readings(db.Model):
-    plant_id = db.Column(db.String, nullable=False , primary_key=True)
-    raspi_id = db.Column(db.String, nullable=False, primary_key=True)
-    user_id = db.Column(db.String, nullable=False, primary_key=True)
+    plant_id = db.Column(db.String, nullable=False, foreign_key="plant_id")
+    raspi_id = db.Column(db.String, nullable=False)
+    user_id = db.Column(db.String, nullable=False, foreign_key="user_id")
     temperature = db.Column(db.Float)
     humidity = db.Column(db.Float)
     soil_moisture = db.Column(db.String)
 
     # Print plant readings
     def __repr__(self):
-        return f"Plant readings('{self.plant_id}', '{self.temperature}', '{self.humidity}', '{self.soil_moisture}')"
+        return f"Plant readings('{self.plant_id}',{self.raspi_id},{self.user_id}, '{self.temperature}', '{self.humidity}', '{self.soil_moisture}')"

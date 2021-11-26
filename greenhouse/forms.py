@@ -41,6 +41,4 @@ class plantForm(FlaskForm):
     humidity = StringField("humidity")
     # brightness = StringField("brightness")
     soil_moisture = StringField("soil_moisture")
-
     submit = SubmitField('Send data')
-

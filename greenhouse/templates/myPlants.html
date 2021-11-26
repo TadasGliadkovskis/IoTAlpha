@@ -10,14 +10,10 @@ myPlants page
 <!--<a href="{{ url_for('index')}}"> index</a>-->
 <script defer src="static/js/pubnub.js"></script>
 <div class="containertable">
-
-
     <section>
         <!-- display a table of players -->
         <h1>My Plants</h1>
-        <form>
-
-            <table onchange="">
+            <table>
                 <tr>
                     <th>Plant ID</th>
                     <th>Image</th>
@@ -39,14 +35,13 @@ myPlants page
                     <td id="brightness">none</td>
                     <td id="soilMoist" class="right">0</td>
                     <td>
-                        <input id="water_button" type="submit" value="Water" onclick="handleClick();">
+                        <input id="water_button" type="submit" value="water" onclick="handleClick(this);">
                     </td>
                     <td>
-                        <input placeholder="Update Plants" id="update" onclick="sendStats()" type="submit">
+                        <input placeholder="Update Plants"  type="submit" id="update" onclick="sendStats()">
                     </td>
                 </tr>
             </table>
-        </form>
 
         <!-- <p><a href="add_player_form.php">Add Record</a></p> -->
         <!-- <p><a href="category_list.php">Manage Categories</a></p>

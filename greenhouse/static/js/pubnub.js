@@ -6,16 +6,13 @@ var myChannel = "greenhouse"
 var request = new XMLHttpRequest();
 function keepAlive()
 {
-
 	request.onreadystatechange = function(){
 		if(this.readyState === 4){
 			if(this.status === 200){
-
 				if(this.responseText !== null){
 					var date = new Date();
 					aliveSecond = date.getTime();
 					var keepAliveData = this.responseText;
-					//convert string to JSON
 				}
 			}
 		}
@@ -47,9 +44,11 @@ pubnub = new PubNub({
         })
 //Does the UUID has to be the same ???
 
-let receivedMsg = { time: 121020211140,
-            temperature: 101,
-            humidity: 212,
+let receivedMsg = {
+            id:1,
+            time: 121020211140,
+            temperature: 10,
+            humidity: 21,
             brightness: "light",
             soil: "wet"}
 
@@ -58,25 +57,28 @@ pubnub.subscribe({channels: [myChannel]});
 
 function sendStats(receivedMsg)
 {
-    request.open("POST", "stats", true);
-	request.send(receivedMsg);
+    request.open("POST", "updateStats", true);
+     myJSON = JSON.stringify(receivedMsg);
+	request.send(myJSON);
 
 }
-sendStats(receivedMsg)
 pubnub.addListener({
-
        message: function(msg) {
+       console.log(msg.message.id)
+            receivedMsg.id = msg.message.id
             receivedMsg.temperature = msg.message.temperature
             receivedMsg.humidity = msg.message.humidity
             receivedMsg.brightness = msg.message.brightness
             receivedMsg.soil = msg.message.soil
-             updateStats()
+             updateStats(msg.message)
+             sendStats(msg.message)
             }
          }
       )
 
 function updateStats(receivedMsg)
 {
+console.log(receivedMsg.temperature)
 document.getElementById('temperature').innerHTML  = receivedMsg.temperature
 document.getElementById('humidity').innerHTML = receivedMsg.humidity
 document.getElementById('brightness').innerHTML = receivedMsg.brightness
@@ -109,4 +111,5 @@ function handleClick()
 	var event = new Object();
 	event.event = ckbStatus;
 	publishUpdate(event, myChannel);
+	 console.log("sent status")
 }
