@@ -1,4 +1,4 @@
-  DROP TABLE IF EXISTS plant_readings,user_plant,user_plants_seq,plants,users,users_seq;
+DROP TABLE IF EXISTS plant_readings,user_plant,user_plants_seq,plants,users,users_seq;
  
  
  CREATE TABLE users_seq
@@ -12,7 +12,7 @@
  username varchar(100) NOT NULL,
  password char(12) NOT NULL,
  PRIMARY KEY (user_id));
- 
+
  
  DELIMITER $$
 CREATE TRIGGER tg_users_insert
@@ -23,6 +23,8 @@ BEGIN
   SET NEW.user_id = CONCAT('U', LPAD(LAST_INSERT_ID(), 3, '0'));
 END$$
 DELIMITER ;
+
+alter table users ADD UNIQUE INDEX(username);
  
   CREATE TABLE plants
 (plant_name varchar(100) NOT NULL,
@@ -32,6 +34,7 @@ ideal_humidity decimal(10,2) NOT NULL,
 ideal_soil_moisture decimal(10,2) NOT NULL,
  PRIMARY KEY (plant_name));
  
+ alter table plants ADD UNIQUE INDEX(plant_name);
  
   CREATE TABLE user_plants_seq
 (
@@ -57,6 +60,8 @@ BEGIN
   SET NEW.plant_id = CONCAT('P', LPAD(LAST_INSERT_ID(), 3, '0'));
 END$$
 DELIMITER ;
+
+alter table user_plant ADD UNIQUE INDEX(user_id,plant_name);
  
   CREATE TABLE plant_readings
 (plant_id varchar(100) NOT NULL,
@@ -140,5 +145,3 @@ alter table users ADD location varchar(100) NOT NULL;
 --later on, if we figure out how to measure the exact soil moisture instead of just 'dry' or 'wet'
 alter table plant_readings change soil_moisture soil_moisture decimal(10,2);
 
-
-alter table user_plant ADD UNIQUE INDEX(user_id,plant_name);
