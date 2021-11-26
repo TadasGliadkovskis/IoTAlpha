@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+<!--<style>-->
+<!--  h1 {margin-top:100;}-->
+<!--</style>-->
+{% block heading %}
+custom page
+{% endblock %}
+
+{% block body %}
+<div class="containertable">
+
+    <h1>Add Plant</h1>
+    <form action="#" method="post" enctype="multipart/form-data" id="add_plant_form">
+
+        <br>
+        <label>Name:</label>
+        <input type="input" name="name" id="username" onBlur="username_validation(); " required>
+        <br>
+        <label>Date Planted:</label>
+        <input type="date" name="DateOfBirth" min="1971-01-01" max="2021-03-15" required>
+        <br>
+        <label>Humidity:</label>
+        <input type="input" name="Humidity" required>
+        <br>
+        <label>Temperature:</label>
+        <input type="number" name="Temperature" min="5.00" required>
+        <br>
+        <label>Soil Moisture:</label>
+        <input type="number" name="Moisture" min="5.00" required>
+        <br>
+        <label>Image:</label>
+        <input type="file" name="image" accept="image/*"/>
+        <br>
+        <label>&nbsp;</label>
+        <input type="submit" value="Add plant">
+        <br>
+    </form>
+
+
+</div>
+{% endblock %}

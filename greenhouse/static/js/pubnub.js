@@ -1,0 +1,112 @@
+var aliveSecond = 0;
+var heartbeatRate = 5000;
+
+var myChannel = "greenhouse"
+
+var request = new XMLHttpRequest();
+function keepAlive()
+{
+
+	request.onreadystatechange = function(){
+		if(this.readyState === 4){
+			if(this.status === 200){
+
+				if(this.responseText !== null){
+					var date = new Date();
+					aliveSecond = date.getTime();
+					var keepAliveData = this.responseText;
+					//convert string to JSON
+				}
+			}
+		}
+	};
+	request.open("GET", "keep_alive", true);
+	request.send(null);
+	setTimeout('keepAlive()', heartbeatRate);
+}
+
+function time()
+{
+	var d = new Date();
+	var currentSec = d.getTime();
+	if(currentSec - aliveSecond > heartbeatRate + 1000)
+	{
+		document.getElementById("Connection_id").innerHTML = "DEAD";
+	}
+	else
+	{
+		document.getElementById("Connection_id").innerHTML = "ALIVE";
+	}
+	setTimeout('time()', 1000);
+}
+
+pubnub = new PubNub({
+            publishKey : "pub-c-011316ff-7704-4b4d-95c1-5596132eea7c",
+            subscribeKey : "sub-c-be0150e4-3bc8-11ec-b886-526a8555c638",
+            uuid: "Client-y2y86"
+        })
+//Does the UUID has to be the same ???
+
+let receivedMsg = { time: 121020211140,
+            temperature: 101,
+            humidity: 212,
+            brightness: "light",
+            soil: "wet"}
+
+
+pubnub.subscribe({channels: [myChannel]});
+
+function sendStats(receivedMsg)
+{
+    request.open("POST", "stats", true);
+	request.send(receivedMsg);
+
+}
+sendStats(receivedMsg)
+pubnub.addListener({
+
+       message: function(msg) {
+            receivedMsg.temperature = msg.message.temperature
+            receivedMsg.humidity = msg.message.humidity
+            receivedMsg.brightness = msg.message.brightness
+            receivedMsg.soil = msg.message.soil
+             updateStats()
+            }
+         }
+      )
+
+function updateStats(receivedMsg)
+{
+document.getElementById('temperature').innerHTML  = receivedMsg.temperature
+document.getElementById('humidity').innerHTML = receivedMsg.humidity
+document.getElementById('brightness').innerHTML = receivedMsg.brightness
+document.getElementById('soilMoist').innerHTML = receivedMsg.soil
+
+}
+function publishUpdate(data, channel)
+{
+    pubnub.publish({
+        channel: channel,
+        message: data
+        },
+        function(status, response){
+            if(status.error){
+                console.log(status);
+            }
+            else
+            {
+                console.log("Message published with timetoken", response.timetoken)
+            }
+           }
+        );
+}
+
+
+function handleClick()
+{
+	var ckbStatus = new Object();
+	ckbStatus[0] = "water";
+	var event = new Object();
+	event.event = ckbStatus;
+	publishUpdate(event, myChannel);
+}

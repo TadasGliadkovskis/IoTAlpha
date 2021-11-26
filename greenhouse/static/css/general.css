@@ -1,0 +1,35 @@
+section {
+    float: left;
+    width: 800px;
+    padding-bottom: 1.5em;
+}
+
+ul {
+    margin: 0 0 1em 0;
+    padding: 0 0 0 2.5em;
+}
+li {
+    margin: 0;
+    padding: 0;
+}
+a {
+    color: rgb(41, 64, 124);
+    font-weight: bold;
+    text-decoration: none;
+}
+a:hover {
+    color: rgb(208, 133, 4);
+}
+
+table {
+    border: 1px solid black;
+    border-collapse: collapse;
+
+    td,
+    th {
+        border: 1px solid black;
+        padding: 0.2em 0.5em 0.2em 0.5em;
+        vertical-align: top;
+        text-align: left;
+    }
+}

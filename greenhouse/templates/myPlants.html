@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+<!--<style>-->
+<!--  h1 {margin-top:100;}-->
+<!--</style>-->
+{% block heading %}
+myPlants page
+{% endblock %}
+
+{% block body %}
+<!--<a href="{{ url_for('index')}}"> index</a>-->
+<script defer src="static/js/pubnub.js"></script>
+<div class="containertable">
+
+
+    <section>
+        <!-- display a table of players -->
+        <h1>My Plants</h1>
+        <form>
+
+            <table onchange="">
+                <tr>
+                    <th>Plant ID</th>
+                    <th>Image</th>
+                    <th>Plant Name</th>
+                    <th>Humidity</th>
+                    <th>Temperature</th>
+                    <th>Brightness</th>
+                    <th>Soil Moisture</th>
+                    <th>Water</th>
+                    <th>Edit</th>
+                    <th>update db</th>
+                </tr>
+                <tr>
+                    <td id="plant_id">1</td>
+                    <td><img src="../static/images/tomato.jpg" width="100px" height="100px"></td>
+                    <td id="name">0</td>
+                    <td id="humidity">0</td>
+                    <td id="temperature">0</td>
+                    <td id="brightness">none</td>
+                    <td id="soilMoist" class="right">0</td>
+                    <td>
+                        <input id="water_button" type="submit" value="Water" onclick="handleClick();">
+                    </td>
+                    <td>
+                        <input placeholder="Update Plants" id="update" onclick="sendStats()" type="submit">
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+        <!-- <p><a href="add_player_form.php">Add Record</a></p> -->
+        <!-- <p><a href="category_list.php">Manage Categories</a></p>
+        <p><a href="contact.php">Contact Us</a></p> -->
+
+    </section>
+</div>
+
+{% endblock %}
+
