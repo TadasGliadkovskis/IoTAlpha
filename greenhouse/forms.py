@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import  BooleanField, StringField, PasswordField, validators, SubmitField
-from wtforms.validators import DataRequired
-
+from wtforms.validators import DataRequired, ValidationError
+from greenhouse.models import users as User
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -13,6 +13,11 @@ class RegistrationForm(FlaskForm):
         validators.EqualTo('password', message='Passwords must match')
     ])
     submit = SubmitField('Sign Up')
+    def validateUsername(self, username):
+        user = User.query.filter_by(username=username.data).first()
+        if user:
+            raise ValidationError("username taken, choose another one")
+
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -23,3 +28,6 @@ class LoginForm(FlaskForm):
     ])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Log in')
+
+
+
