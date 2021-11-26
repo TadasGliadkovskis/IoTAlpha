@@ -11,7 +11,6 @@ class users(db.Model, UserMixin):
     user_id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
     name = db.Column(db.String(120), nullable=False)
-    location = db.Column(db.String(50), nullable=False)
     password = db.Column(db.String(255), nullable=False)
 
     #Print user
@@ -26,7 +25,7 @@ class users(db.Model, UserMixin):
         hashed = bcrypt.generate_password_hash(password).decode('utf-8')
         print(hashed)
         return hashed
-# Need to create plant and other models
+
 
 class plants(db.Model):
     plant_name = db.Column(db.String, primary_key=True, nullable=False)
