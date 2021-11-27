@@ -19,6 +19,7 @@ data = {}
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     # generate ID for user
+
     users_id = uuid.uuid4().int
     form = RegistrationForm(request.form)
 
@@ -71,6 +72,7 @@ def updateStats():
         if request.method == 'POST':
             readings = plant_readings(
                 user_id=dbplant.user_id,
+                raspi_id=dbplant.user_id,
                 plant_id=plant.plant_id,
                 temperature=plant.temperature,
                 humidity=plant.humidity,
@@ -83,6 +85,23 @@ def updateStats():
 
     return render_template("myPlants.html", data=data)
 
+@app.route("/addPlant", methods=['GET','POST'])
+def addPlant():
+
+    form = plantForm(request.form)
+    if request.method == 'POST' and form.validate_on_submit():
+        new_plant = plant_readings(
+            user_id=form.user_id.data,
+            plant_id=form.plant_id.data,
+            username=form.username.data,
+            planted = form.planted.data,
+            )
+        print(new_plant)
+        # Create an instance of the plant class
+        db.session.add(new_plant)  # Adds new User record to database
+        db.session.commit()  # Commits all changes
+        return redirect(url_for('loginPage2'))
+    return render_template("myPlants.html", form=form)
 
 @app.route("/custom")
 def custom():

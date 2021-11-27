@@ -63,6 +63,7 @@ function sendStats(receivedMsg)
 
 }
 pubnub.addListener({
+
        message: function(msg) {
        console.log(msg.message.id)
             receivedMsg.id = msg.message.id

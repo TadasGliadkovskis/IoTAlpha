@@ -50,6 +50,7 @@ class user_plant(db.Model):
         return f"User plant('{self.plant_id}', '{self.user_id}', '{self.plant_name}', '{self.watered}', '{self.planted}')"
 
 class plant_readings(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
     plant_id = db.Column(db.String, nullable=False, foreign_key="plant_id")
     raspi_id = db.Column(db.String, nullable=False)
     user_id = db.Column(db.String, nullable=False, foreign_key="user_id")
