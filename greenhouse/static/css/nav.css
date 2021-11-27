@@ -65,6 +65,7 @@
   --bs-body-bg: #fff;
 }
 
+
 *,
 *::before,
 *::after {
@@ -77,8 +78,8 @@
   }
 }
 
-/*body {
-  margin: 0;
+body {
+ /* margin: 0;
   font-family: var(--bs-body-font-family);
   font-size: var(--bs-body-font-size);
   font-weight: var(--bs-body-font-weight);
@@ -87,11 +88,13 @@
   text-align: var(--bs-body-text-align);
   background-color: var(--bs-body-bg);
   -webkit-text-size-adjust: 100%;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}*/
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);*/
+}
 
 
-h1 {margin-top:100px;}
+h1 {margin-top:100px;
+color: black;
+}
 
 
 abbr[title],
@@ -11824,6 +11827,7 @@ br {
     padding-right: 0em;
     padding-bottom: 0.5em;
     float: left;
+    color: black;
 }
 #add_plant_form input {
     float: left;
@@ -11862,5 +11866,15 @@ br {
     // background-color: $edit;
     background-color: rgb(212, 212, 71);
     border: white;
+}
+
+body{
+	font-family: 'Poppins', sans-serif;
+	font-weight: 300;
+	font-size: 15px;
+	line-height: 1.7;
+	color: white;
+	background-image: url(../images/dirt.jpg);
+	overflow-x: hidden;
 }
 

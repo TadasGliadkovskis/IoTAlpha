@@ -24,6 +24,7 @@ a:hover {
 table {
     border: 1px solid black;
     border-collapse: collapse;
+    background-color: #2d5630;
 
     td,
     th {
@@ -33,3 +34,7 @@ table {
         text-align: left;
     }
 }
+
+
+
+

@@ -6,7 +6,7 @@ from greenhouse.models import users as User, plant_readings
 from flask_login import login_user, current_user
 import json
 from types import SimpleNamespace
-import apperror as AppError
+# import apperror as AppError
 @app.route('/dashboard')
 def dashboard():
     return render_template("dashboard.html")
