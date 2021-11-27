@@ -1,0 +1,24 @@
+<script defer src="static/js/pubnub.js"></script>
+<div class="containertable">
+    <section>
+        <!-- display a table of players -->
+        <h1>My Green House</h1>
+            <table>
+                <tr>
+                    <th>Humidity</th>
+                    <th>Temperature</th>
+                    <th>Brightness</th>
+                </tr>
+                <tr>
+                    <td id="humidity">80</td>
+                    <td id="temperature"> 27C </td>
+                    <td id="brightness">none</td>
+                </tr>
+            </table>
+
+        <!-- <p><a href="add_player_form.php">Add Record</a></p> -->
+        <!-- <p><a href="category_list.php">Manage Categories</a></p>
+        <p><a href="contact.php">Contact Us</a></p> -->
+
+    </section>
+</div>
