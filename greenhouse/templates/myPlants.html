@@ -7,48 +7,45 @@ myPlants page
 {% endblock %}
 
 {% block body %}
+
+{% if current_user.is_authenticated %}
 <!--<a href="{{ url_for('index')}}"> index</a>-->
 <script defer src="static/js/pubnub.js"></script>
 <div class="containertable">
     <section>
         <!-- display a table of players -->
         <h1>My Plants</h1>
-            <table>
-                <tr>
-                    <th>Plant ID</th>
-                    <th>Image</th>
-                    <th>Plant Name</th>
-                    <th>Humidity</th>
-                    <th>Temperature</th>
-                    <th>Brightness</th>
-                    <th>Soil Moisture</th>
-                    <th>Water</th>
-                    <th>Edit</th>
-                    <th>update db</th>
-                </tr>
-                <tr>
-                    <td id="plant_id">1</td>
-                    <td><img src="../static/images/tomato.jpg" width="100px" height="100px"></td>
-                    <td id="name">Tomatoe</td>
-                    <td id="humidity">80</td>
-                    <td id="temperature"> 27C </td>
-                    <td id="brightness">none</td>
-                    <td id="soilMoist" class="right">0</td>
-                    <td>
-                        <input id="water_button" type="submit" value="water" onclick="handleClick(this);">
-                    </td>
-                    <td>
-                        <input placeholder="Update Plants"  type="submit" id="update" onclick="sendStats()">
-                    </td>
-                </tr>
-            </table>
+        <table>
+            <tr>
+                <th>Plant ID</th>
+                <th>Image</th>
+                <th>Plant Name</th>
+                <th>Humidity</th>
+                <th>Temperature</th>
+                <th>Brightness</th>
+                <th>Soil Moisture</th>
+                <th>Water</th>
+                <th>Delete plant</th>
 
-        <!-- <p><a href="add_player_form.php">Add Record</a></p> -->
-        <!-- <p><a href="category_list.php">Manage Categories</a></p>
-        <p><a href="contact.php">Contact Us</a></p> -->
+            </tr>
+            {% for plant in plants %}
+            <tr>
+                <td class="plant_id">{{plant.plant_id}}</td>
+                <td><img src="../static/images/tomato.jpg" width="100px" height="100px"></td>
+                <td>{{plant.plant_name}}</td>
+                <td>0</td>
+                <td>0</td>
+                <td>none</td>
+                <td>0</td>
+                <td>
+                <input id="water_button" type="submit" value="water" onclick="handleClick(this);">
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
 
     </section>
 </div>
-
+{% endif %}
 {% endblock %}
 

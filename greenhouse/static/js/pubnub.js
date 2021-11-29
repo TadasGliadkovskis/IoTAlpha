@@ -63,6 +63,7 @@ function sendStats(receivedMsg)
 
 }
 pubnub.addListener({
+
        message: function(msg) {
        console.log(msg.message.id)
             receivedMsg.id = msg.message.id
@@ -103,7 +104,12 @@ function publishUpdate(data, channel)
         );
 }
 
+function deletePlant(plant)
+{
+    console.log(plant.value)
+    request.open("POST", "deletePlant", true);
 
+}
 function handleClick()
 {
 	var ckbStatus = new Object();

@@ -15,13 +15,12 @@ class users(db.Model, UserMixin):
 
     #Print user
     def __repr__(self):
-        return f"User('{self.username}', '{self.name}', '{self.location}')"
+        return f"User('{self.username}', '{self.name}')"
 
     def get_id(self):
         return (self.user_id)
 
     def hash(password):
-
         hashed = bcrypt.generate_password_hash(password).decode('utf-8')
         print(hashed)
         return hashed
@@ -40,8 +39,8 @@ class plants(db.Model):
 
 class user_plant(db.Model):
     plant_id = db.Column(db.String, primary_key=True)
-    user_id = db.Column(db.String, primary_key=True, nullable=False)
-    plant_name = db.Column(db.String, primary_key=True, nullable=False)
+    user_id = db.Column(db.String, primary_key=True, nullable=False, foreign_key=True)
+    plant_name = db.Column(db.String, primary_key=True, nullable=False, foreign_key=True)
     watered = db.Column(db.DateTime)
     planted = db.Column(db.Date, nullable=False)
 
@@ -50,9 +49,10 @@ class user_plant(db.Model):
         return f"User plant('{self.plant_id}', '{self.user_id}', '{self.plant_name}', '{self.watered}', '{self.planted}')"
 
 class plant_readings(db.Model):
-    plant_id = db.Column(db.String, nullable=False, primary_key=True)
-    raspi_id = db.Column(db.String, nullable=False, primary_key=True)
-    user_id = db.Column(db.String, nullable=False, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    plant_id = db.Column(db.String, nullable=False, foreign_key=True)
+    raspi_id = db.Column(db.String, nullable=False)
+    user_id = db.Column(db.String, nullable=False, foreign_key=True)
     temperature = db.Column(db.Float)
     humidity = db.Column(db.Float)
     soil_moisture = db.Column(db.String)
