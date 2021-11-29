@@ -25,6 +25,7 @@ myPlants page
                             <div class="card-front">
                                 <div class="center-wrap">
                                     <div class="section text-center">
+                                        <div>
                                         {% with messages = get_flashed_messages() %}
                                         {% if messages %}
                                         {% for message in messages %}
@@ -32,6 +33,7 @@ myPlants page
                                         {% endfor %}
                                         {% endif %}
                                         {% endwith %}
+                                        </div>
                                         <div class="login-wrap py-5">
                                             <div class="img d-flex align-items-center justify-content-center"
                                                  style="background-image: url(static/images/greenhouse-logo_10250-3662.png);"></div>
@@ -40,16 +42,14 @@ myPlants page
                                             -->
                                             <h4 class="mb-4 pb-3">Sign in by entering the information below</h4>
                                             <form action="{{ url_for('login') }}" method="post">
+                                                {{ loginForm.hidden_tag() }}
                                                 <div class="form-group">
-                                                    {{form.username(placeholder="UserName", class="form-style")}}
-
+                                                    {{loginForm.username(placeholder="UserName", class="form-style")}}
                                                 </div>
                                                 <div class="form-group mt-2">
-                                                    {{form.password(placeholder="Password", class="form-style")}}
-
+                                                    {{loginForm.password(placeholder="Password", class="form-style")}}
                                                 </div>
-                                                {{form.submit(class="btn mt-4")}}
-
+                                                {{loginForm.submitLogin(class="btn mt-4")}}
                                             </form>
                                             <p class="mb-0 mt-4 text-center"><a href="#0" class="link">Forgot your
                                                 password?</a></p>
@@ -63,24 +63,24 @@ myPlants page
                                     <div class="section text-center">
                                         <h4 class="mb-4 pb-3">Sign Up</h4>
                                         <form action="{{ url_for('register') }}" method="POST">
-                                            {{ form.hidden_tag() }}
+                                            {{ registerForm.hidden_tag() }}
                                             <div class="form-group">
-                                                {{form.username(placeholder="UserName", class="form-style")}}
+                                                {{registerForm.username(placeholder="UserName", class="form-style")}}
                                             </div>
                                             <div class="form-group">
-                                                {{form.name(placeholder="Your Name", class="form-style")}}
+                                                {{registerForm.name(placeholder="Your Name", class="form-style")}}
                                             </div>
                                             <div class="form-group mt-2">
-                                                {{form.location(placeholder="Location", class="form-style")}}
+                                                {{registerForm.location(placeholder="Location", class="form-style")}}
                                             </div>
                                             <div class="form-group mt-2">
-                                                {{form.password(placeholder="Password", class="form-style")}}
+                                                {{registerForm.password(placeholder="Password", class="form-style")}}
                                             </div>
                                             <div class="form-group mt-2">
-                                                {{form.confirm_password(placeholder="Confirm Password",
+                                                {{registerForm.confirm_password(placeholder="Confirm Password",
                                                 class="form-style")}}
                                             </div>
-                                            {{form.submit(class="btn mt-4")}}
+                                            {{registerForm.submit(class="btn mt-4")}}
                                         </form>
                                     </div>
                                 </div>

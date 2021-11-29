@@ -104,7 +104,12 @@ function publishUpdate(data, channel)
         );
 }
 
+function deletePlant(plant)
+{
+    console.log(plant.value)
+    request.open("POST", "deletePlant", true);
 
+}
 function handleClick()
 {
 	var ckbStatus = new Object();
