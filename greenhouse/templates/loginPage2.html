@@ -64,14 +64,11 @@ myPlants page
                                         <h4 class="mb-4 pb-3">Sign Up</h4>
                                         <form action="{{ url_for('register') }}" method="POST">
                                             {{ registerForm.hidden_tag() }}
-                                            <div class="form-group">
+                                            <div class="form-group mt-2">
                                                 {{registerForm.username(placeholder="UserName", class="form-style")}}
                                             </div>
-                                            <div class="form-group">
-                                                {{registerForm.name(placeholder="Your Name", class="form-style")}}
-                                            </div>
                                             <div class="form-group mt-2">
-                                                {{registerForm.location(placeholder="Location", class="form-style")}}
+                                                {{registerForm.name(placeholder="Your Name", class="form-style")}}
                                             </div>
                                             <div class="form-group mt-2">
                                                 {{registerForm.password(placeholder="Password", class="form-style")}}

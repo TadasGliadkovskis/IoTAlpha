@@ -1,7 +1,7 @@
 from greenhouse import db, login_manager
 from flask_login import UserMixin
 from greenhouse import bcrypt
-#Model for the MYSQLAlchemy library
+# Model for the MYSQLAlchemy library
 
 @login_manager.user_loader
 def load_user(user_id):
