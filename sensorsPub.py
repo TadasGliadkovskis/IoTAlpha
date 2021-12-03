@@ -4,6 +4,7 @@ from time import sleep
 import threading
 import os
 import logging
+from datetime import datetime
 import Adafruit_DHT
 
 
@@ -21,7 +22,6 @@ pnconfig.uuid = '02060d4f-508a-4ca2-b1d2-a1d22ee5cc48' #
 pubnub = PubNub(pnconfig)
 
 my_channel = "tadas-pi-channel"
-sensor_list = ["buzzer"]
 data = {}
 publish_message = {}
 
@@ -30,9 +30,9 @@ GPIO.setmode(GPIO.BOARD)
 
 soil = 40
 DHT_SENSOR = Adafruit_DHT.DHT22
-DHT_BCM_PIN = 3 #USE BCM NUMBERING FOR THIS
+DHT_BCM_PIN = 15 #USE BCM NUMBERING FOR THIS
 ldr = 3
-led = 7
+led = 16
 
 
 GPIO.setup(soil,GPIO.IN)
@@ -43,46 +43,56 @@ GPIO.setup(led,GPIO.OUT)
 def call_sensors():
       print()
       check_temp(5)
-      check_soil(10)
-      check_for_light(10)
+      check_soil(5)
+      check_for_light(5)
       publish_to_pub()
-      sys.exit()
+      sleep(5)
 
 
-#test dht11 for 10 seconds
+#test dht22 for 10 seconds
 def check_temp(seconds):
       global publish_message
       for i in range(seconds):
             humidity, temperature = Adafruit_DHT.read_retry(DHT_SENSOR, DHT_BCM_PIN)
-            if humidity is not None and temperature is not None:
-                  publish_message.update({"Temperature" : "{:.1f}".format(temperature), "Humidity": "{:.1f}".format(humidity)})
-            else:
-                  publish(my_channel, {"Fail" : "Fail to retrieve data"})
-            sleep(1)
+            
+      if humidity is not None and temperature is not None:
+            publish_message.update({"temperature" : "{:.1f}".format(temperature), "humidity": "{:.1f}".format(humidity)})
+      else:
+            publish(my_channel, {"fail" : "Fail to retrieve data"})
+      sleep(0.2)
 
 def check_soil(seconds):
       global publish_message
+      soil_status = "Dry"
       for i in range(seconds):
             if not(GPIO.input(soil)):
-                  publish_message.update({"Soil" : "Wet"})
+                  soil_status = "Wet"
             else:
-                  publish_message.update({"Soil" : "Dry"})
-            sleep(1)
+                  soil_status = "Dry"
+            sleep(0.2)
+      publish_message.update({"soil":soil_status})
 
 #test ldr with led
 def check_for_light(seconds):
       global publish_message
+      brightness_levels = "Light"
       for i in range(seconds):
-                  if GPIO.input(ldr):
-                        publish_message.update({"Brightness" : "Dark"})
-                        GPIO.output(led,True)
-                  else:
-                        publish_message.update({"Brightness" : "Light"})
-                        GPIO.output(led,False)
-                  sleep(1)
+        if GPIO.input(ldr):
+            brightness_levels = "Dark"
+            GPIO.output(led,True)
+        else:
+            brightness_levels = "Light"
+            GPIO.output(led,False)
+        sleep(0.2)
+      publish_message.update({"brightness":brightness_levels})
+
+      
 
 def publish_to_pub():
     global publish_message
+    now = datetime.now()
+    current_time = now.strftime("%d-%M-%Y %H:%M")
+    publish_message.update({"time":current_time})
     publish(my_channel, publish_message)
 
 
@@ -139,15 +149,11 @@ class MySubscribeCallback(SubscribeCallback):
             pass
 
 
-def handle_event(msg):
-    global data
-    event_data= msg["event"]
-    key = list(event_data.keys())
-    print(key)
-    print(key[0])
-    if key[0] == "refresh":
-        print("Refresh request")
-        call_sensors()
+    def handle_event(self, msg):
+        global data
+        event_data= msg["event"]
+        if "refresh" == event_data:
+            call_sensors()
 
 if __name__ == '__main__':
     sensors_thread = threading.Thread(target = call_sensors)
