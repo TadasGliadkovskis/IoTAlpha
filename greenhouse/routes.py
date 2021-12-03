@@ -47,7 +47,7 @@ def login():
     register_form = RegistrationForm()
     login_form = LoginForm()
     if current_user.is_authenticated:
-        return redirect(url_for('myPlants'))
+        return redirect(url_for('index'))
     if login_form.validate_on_submit():
         user = User.query.filter_by(username=login_form.username.data).first()
         if user and bcrypt.check_password_hash(user.password, login_form.password.data):
@@ -55,7 +55,7 @@ def login():
             login_user(user)
             session['password'] = user.password
 
-            return redirect(url_for("myPlants"))
+            return redirect(url_for("index"))
         else:
             flash('login unsuccessful check username and password')
     return render_template('loginPage2.html',loginForm=login_form, registerForm=register_form )
