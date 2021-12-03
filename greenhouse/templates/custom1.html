@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+<!--<style>-->
+<!--  h1 {margin-top:100;}-->
+<!--</style>-->
+{% block heading %}
+custom page
+{% endblock %}
+
+{% block body %}
+<div class="containertable">
+
+    <h1>Add Plant</h1>
+    <form action="{{ url_for('custom') }}" method="post" enctype="multipart/form-data" id="add_plant_form">
+        {{ form.hidden_tag() }}
+        <br>
+<!--        <label>Plant Name:</label>-->
+<!--        {{ form.plant_name() }}-->
+<!--        <br>-->
+        <label>Plant Name:</label>
+        {{ form.plant_id() }}
+        <br>
+        <label>Date Planted:</label>
+        {{ form.date_planted() }}
+        <br>
+        <label>Min Humidity:</label>
+        {{ form.humidity() }}
+        <br>
+        <label>Max Humidity:</label>
+        {{ form.humidity() }}
+        <br>
+        <label>Min Temperature:</label>
+        {{ form.temperature() }}
+        <br>
+        <label>Max Temperature:</label>
+        {{ form.temperature() }}
+        <br>
+        <label>Min Soil Moisture:</label>
+        {{ form.soil_moisture() }}
+        <br>
+        <label>Max Soil Moisture:</label>
+        {{ form.soil_moisture() }}
+        <br>
+        {{form.submit()}}
+        <br>
+    </form>
+</div>
+{% endblock %}
