@@ -1,5 +1,8 @@
+#Author: Rodions Barannikovs
+
+
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, StringField, PasswordField, validators, SubmitField, DateField, SelectField
+from wtforms import StringField, PasswordField, validators, SubmitField, DateField, SelectField
 from wtforms.validators import DataRequired, ValidationError
 from greenhouse.models import users as User
 
@@ -7,7 +10,6 @@ from greenhouse.models import users as User
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     name = StringField('Name', validators=[DataRequired()])
-    location = StringField('Location', validators=[DataRequired()])
     password = PasswordField('Password')
     confirm_password = PasswordField('Repeat Password', [
         validators.DataRequired(),
@@ -27,10 +29,10 @@ class LoginForm(FlaskForm):
 
 class plantForm(FlaskForm):
 
-    plant_name = SelectField(u'name', choices=[('Carrot', 'Carrot'), ('Cucumber', 'Cucumber'), ('Tomato', 'Tomato')])
-    plant_id = StringField("plant_id")
+    plant_name = StringField("Name")
     date_planted = DateField('Date')
-    temperature = StringField("temperature")
+    maxTemp = StringField("Maximum Temperature")
+    minTemp = StringField("Minimum Temperature")
     humidity = StringField("humidity")
     soil_moisture = StringField("soil_moisture")
     submit = SubmitField('Send data')

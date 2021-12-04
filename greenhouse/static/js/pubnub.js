@@ -1,7 +1,9 @@
+//Author Rodions Barannikovs
+
 var aliveSecond = 0;
 var heartbeatRate = 5000;
 
-var myChannel = "greenhouse"
+var myChannel = "tadas-pi-channel"
 
 var request = new XMLHttpRequest();
 function keepAlive()
@@ -38,19 +40,18 @@ function time()
 }
 
 pubnub = new PubNub({
-            publishKey : "pub-c-011316ff-7704-4b4d-95c1-5596132eea7c",
-            subscribeKey : "sub-c-be0150e4-3bc8-11ec-b886-526a8555c638",
-            uuid: "Client-y2y86"
+            publishKey : "pub-c-23f0b7bb-05d1-4e28-ac32-f35c4b8a805c",
+            subscribeKey : "sub-c-5180f24a-546d-11ec-931a-1addb9510060",
+            uuid: "8ffc7d7d-2363-4ec8-bb6e-51ec369cd573"
         })
 //Does the UUID has to be the same ???
 
 let receivedMsg = {
-            id:1,
-            time: 121020211140,
-            temperature: 10,
-            humidity: 21,
+            temperature: "101",
+            humidity: "212",
             brightness: "light",
-            soil: "wet"}
+            soil: "wet",
+            time: "time"}
 
 
 pubnub.subscribe({channels: [myChannel]});
@@ -60,30 +61,30 @@ function sendStats(receivedMsg)
     request.open("POST", "updateStats", true);
      myJSON = JSON.stringify(receivedMsg);
 	request.send(myJSON);
+	console.log(myJSON);
 
 }
 pubnub.addListener({
-
        message: function(msg) {
-       console.log(msg.message.id)
-            receivedMsg.id = msg.message.id
             receivedMsg.temperature = msg.message.temperature
             receivedMsg.humidity = msg.message.humidity
-            receivedMsg.brightness = msg.message.brightness
             receivedMsg.soil = msg.message.soil
-             updateStats(msg.message)
-             sendStats(msg.message)
+            receivedMsg.brightness = msg.message.brightness
+            receivedMsg.time = msg.message.time
+            console.log(receivedMsg.brightness)
+            updateStats(msg.message)
+//            sendStats(msg.message)
             }
          }
       )
 
 function updateStats(receivedMsg)
 {
-console.log(receivedMsg.temperature)
 document.getElementById('temperature').innerHTML  = receivedMsg.temperature
 document.getElementById('humidity').innerHTML = receivedMsg.humidity
 document.getElementById('brightness').innerHTML = receivedMsg.brightness
-document.getElementById('soilMoist').innerHTML = receivedMsg.soil
+document.getElementById('soil').innerHTML = receivedMsg.soil
+document.getElementById('time').innerHTML = receivedMsg.time
 
 }
 function publishUpdate(data, channel)
@@ -104,18 +105,19 @@ function publishUpdate(data, channel)
         );
 }
 
-function deletePlant(plant)
-{
-    console.log(plant.value)
-    request.open("POST", "deletePlant", true);
-
-}
+//function deletePlant(plant)
+//{
+//    console.log(plant.value)
+//    request.open("POST", "deletePlant", true);
+//
+//}
 function handleClick()
 {
 	var ckbStatus = new Object();
-	ckbStatus[0] = "water";
+	ckbStatus = "refresh";
 	var event = new Object();
 	event.event = ckbStatus;
 	publishUpdate(event, myChannel);
+	console.log(event);
 	 console.log("sent status")
 }

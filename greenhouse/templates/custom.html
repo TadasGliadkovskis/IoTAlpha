@@ -7,56 +7,56 @@ custom page
 {% endblock %}
 
 {% block body %}
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
-    <link href="./static/css/addPage.css" rel="stylesheet"/>
- <div class="testbox">
-        <form>
-<!--            <div class="banner">-->
-<!--                <h1>Hotel Reservation Form</h1>-->
-<!--            </div>-->
-            <br/>
-            <fieldset>
-                <legend>Add Plant</legend>
-                <div class="columns">
-                    <div class="item">
-                        <label>Plant Name<span>*</span></label>
-                        {{ form.plant_id() }}
-                    </div>
-                    <div class="item">
-                        <label>Date Planted<span>*</span></label>
-                        {{ form.date_planted() }}
-                        <i class="fas fa-calendar-alt"></i>
-                    </div>
-                    <div class="item">
-                        <label for="address">Minimum Temperature<span>*</span></label>
-                        <input id="address" type="text" name="address" />
-                    </div>
-                    <div class="item">Maximum Temperature<span>*</span></label>
-                        <input id="zip" type="text" name="zip" required />
-                    </div>
-                    <div class="item">
-                        <label for="city">Minimum Humidity<span>*</span></label>
-                        <input id="city" type="text" name="city" />
-                    </div>
-                    <div class="item">
-                        <label for="state">Maximum Humidity<span>*</span></label>
-                        <input id="state" type="text" name="state" />
-                    </div>
-<!--                    <div class="item">-->
-<!--                        <label for="eaddress">Minimum Soil<span>*</span></label>-->
-<!--                        <input id="eaddress" type="text" name="eaddress" />-->
-<!--                    </div>-->
-<!--                    <div class="item">-->
-<!--                        <label for="phone">Maximum Soil<span>*</span></label>-->
-<!--                        <input id="phone" type="text" name="phone" />-->
-<!--                    </div>-->
-            </fieldset>
-            <br />
-
-            <div class="btn-block">
-                <button type="submit" href="/">Submit</button>
-<!--                <button type="submit" href={{form.submit()}} Submit</button>-->
-            </div>
-        </form>
-    </div>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+<link href="./static/css/addPage.css" rel="stylesheet"/>
+<div class="testbox">
+    <form action="{{ url_for('custom') }}" method="post">
+        <!--            <div class="banner">-->
+        <!--                <h1>Hotel Reservation Form</h1>-->
+        <!--            </div>-->
+         {{ form.hidden_tag() }}
+        <br/>
+        <fieldset>
+            <legend>Add Plant</legend>
+            <div class="columns">
+                <div class="item">
+                    <label>Plant Name<span>*</span></label>
+                    {{ form.plant_name() }}
+                </div>
+                <div class="item">
+                    <label>Date Planted<span>*</span></label>
+                    {{ form.date_planted() }}
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="item">
+                    <label>Minimum Temperature<span>*</span></label>
+                    {{ form.minTemp() }}
+                </div>
+                <div class="item">Maximum Temperature<span>*</span></label>
+                    {{form.maxTemp()}}
+                </div>
+                <div class="item">
+                    <label>Ideal Humidity<span>*</span></label>
+                    {{form.humidity()}}
+                </div>
+                <div class="item">
+                    <label>Soil Moisture<span>*</span></label>
+                    {{form.soil_moisture()}}
+                </div>
+                <!--                    <div class="item">-->
+                <!--                        <label for="eaddress">Minimum Soil<span>*</span></label>-->
+                <!--                        <input id="eaddress" type="text" name="eaddress" />-->
+                <!--                    </div>-->
+                <!--                    <div class="item">-->
+                <!--                        <label for="phone">Maximum Soil<span>*</span></label>-->
+                <!--                        <input id="phone" type="text" name="phone" />-->
+                <!--                    </div>-->
+        </fieldset>
+        <br/>
+        <div class="btn-block">
+            {{ form.submit()}}
+            <!--                <button type="submit" href={{form.submit()}} Submit</button>-->
+        </div>
+    </form>
+</div>
 {% endblock %}
