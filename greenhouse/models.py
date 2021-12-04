@@ -1,3 +1,5 @@
+#Author: Rodions Barannikovs and Himansh Arora
+
 from greenhouse import db, login_manager
 from flask_login import UserMixin
 from greenhouse import bcrypt
@@ -31,7 +33,7 @@ class plants(db.Model):
     ideal_lower_temperature = db.Column(db.Float, nullable=False)
     ideal_higher_temperature = db.Column(db.Float, nullable=False)
     ideal_soil_moisture = db.Column(db.Float, nullable=False)
-
+    ideal_humidity = db.Column(db.Float, nullable=False)
     #Print plant
     def __repr__(self):
         return f"Plant('{self.plant_name}', '{self.ideal_lower_temperature}', '{self.ideal_higher_temperature}', '{self.ideal_soil_moisture}')"
@@ -39,8 +41,8 @@ class plants(db.Model):
 
 class user_plant(db.Model):
     plant_id = db.Column(db.String, primary_key=True)
-    user_id = db.Column(db.String, primary_key=True, nullable=False, foreign_key=True)
-    plant_name = db.Column(db.String, primary_key=True, nullable=False, foreign_key=True)
+    user_id = db.Column(db.String, primary_key=True, nullable=False)
+    plant_name = db.Column(db.String, primary_key=True, nullable=False)
     watered = db.Column(db.DateTime)
     planted = db.Column(db.Date, nullable=False)
 
@@ -50,9 +52,9 @@ class user_plant(db.Model):
 
 class plant_readings(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    plant_id = db.Column(db.String, nullable=False, foreign_key=True)
+    plant_id = db.Column(db.String, nullable=False)
     raspi_id = db.Column(db.String, nullable=False)
-    user_id = db.Column(db.String, nullable=False, foreign_key=True)
+    user_id = db.Column(db.String, nullable=False)
     temperature = db.Column(db.Float)
     humidity = db.Column(db.Float)
     soil_moisture = db.Column(db.String)

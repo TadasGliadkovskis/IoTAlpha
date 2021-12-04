@@ -1,13 +1,13 @@
-from flask import render_template, redirect, url_for, request, flash, make_response, session
+#Author: Rodions Barannikovs
+
+from flask import render_template, redirect, url_for, request, flash, session
 from greenhouse.forms import RegistrationForm, LoginForm, plantForm
 import uuid
-from greenhouse import db, bcrypt, app, logger
-from greenhouse.models import users as User, plant_readings,user_plant
+from greenhouse import db, bcrypt, app
+from greenhouse.models import users as User, plant_readings,user_plant, plants as custom_plant
 from flask_login import login_user, current_user, logout_user, login_required
 import json
 from types import SimpleNamespace
-
-
 
 @app.route('/dashboard')
 def dashboard():
@@ -51,10 +51,8 @@ def login():
     if login_form.validate_on_submit():
         user = User.query.filter_by(username=login_form.username.data).first()
         if user and bcrypt.check_password_hash(user.password, login_form.password.data):
-
             login_user(user)
-            session['password'] = user.password
-
+            session['user_id'] = user.user_id
             return redirect(url_for("myPlants"))
         else:
             flash('login unsuccessful check username and password')
@@ -82,15 +80,12 @@ def updateStats():
     data = request.data
     plant = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
     try:
-        dbplant = plant_readings.query.filter_by(user_id=plant.user_id).first()
-        print(dbplant)
         if request.method == 'POST':
             readings = plant_readings(
-                user_id=dbplant.user_id,
-                raspi_id=dbplant.user_id,
                 plant_id=plant.plant_id,
                 temperature=plant.temperature,
                 humidity=plant.humidity,
+                brightness =plant.brightness,
                 soil_moisture=plant.soil_moisture,
             )
             db.session.add(readings)
@@ -98,25 +93,32 @@ def updateStats():
     except RuntimeError as error:
         raise RuntimeError('specific message') from error
 
-    return render_template("myPlants.html", data=data)
+    return render_template("index.html", data=data)
 
 @app.route("/custom", methods=['GET', 'POST'])
 @login_required
 def custom():
 
-    pw = session.get('password')
-    user = User.query.filter_by(password=pw).first()
+    user_id = session.get('user_id')
+    user = User.query.filter_by(user_id=user_id).first()
     form = plantForm(request.form)
     if user:
         if request.method == 'POST' and form.validate_on_submit():
             new_plant = user_plant(
                 user_id=user.user_id,
                 plant_name=form.plant_name.data,
-                plant_id=form.plant_id.data,
                 planted=form.date_planted.data,
             )
+            cust = custom_plant (
+                plant_name = form.plant_name.data,
+                ideal_lower_temperature = form.minTemp.data,
+                ideal_higher_temperature = form.maxTemp.data,
+                ideal_humidity = form.humidity.data,
+                ideal_soil_moisture = form.soil_moisture.data
+            )
             # Create an instance of the plant class
-            db.session.add(new_plant)  # Adds new User record to database
+            db.session.add(new_plant)
+            db.session.add(cust)
             db.session.commit()  # Commits all changes
             return redirect(url_for('myPlants'))
 
@@ -124,6 +126,7 @@ def custom():
 
 
 @app.route("/index")
+@login_required
 def index():
     return render_template("index.html")
 
@@ -132,8 +135,9 @@ def index():
 @login_required
 def myPlants():
 
-    pw = session.get('password')
-    user = User.query.filter_by(password=pw).first()
+    user_idSession = session.get('user_id')
+    print(user_idSession)
+    user = User.query.filter_by(user_id=user_idSession).first()
     user_id = user.user_id
     plants = {}
     if user:
@@ -157,8 +161,6 @@ def keep_alive():
     data['keep_alive'] = keep_alive_count
     parsed_json = json.dumps(data)
     return str(parsed_json)
-
-
 
 if __name__ == "__main__":
     app.run(debug=True)
