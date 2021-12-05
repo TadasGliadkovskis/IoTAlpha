@@ -3,11 +3,10 @@
 from greenhouse import db, login_manager
 from flask_login import UserMixin
 from greenhouse import bcrypt
-#Model for the MYSQLAlchemy library
 
 @login_manager.user_loader
 def load_user(user_id):
-    return users.query.get(int(user_id))
+    return users.query.get(user_id)
 
 class users(db.Model, UserMixin):
     user_id = db.Column(db.Integer, primary_key=True)
@@ -29,14 +28,17 @@ class users(db.Model, UserMixin):
 
 
 class plants(db.Model):
+
     plant_name = db.Column(db.String, primary_key=True, nullable=False)
     ideal_lower_temperature = db.Column(db.Float, nullable=False)
     ideal_higher_temperature = db.Column(db.Float, nullable=False)
     ideal_soil_moisture = db.Column(db.Float, nullable=False)
     ideal_humidity = db.Column(db.Float, nullable=False)
+    user_id = db.Column(db.String, nullable=False)
+    plant_id = db.Column(db.String, nullable=False)
     #Print plant
     def __repr__(self):
-        return f"Plant('{self.plant_name}', '{self.ideal_lower_temperature}', '{self.ideal_higher_temperature}', '{self.ideal_soil_moisture}')"
+        return f"Plant('Name'{self.plant_name}', '{self.ideal_lower_temperature}', '{self.ideal_higher_temperature}', '{self.ideal_soil_moisture}')"
 
 
 class user_plant(db.Model):

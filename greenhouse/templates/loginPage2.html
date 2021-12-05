@@ -37,11 +37,8 @@ myPlants page
                                         <div class="login-wrap py-5">
                                             <div class="img d-flex align-items-center justify-content-center"
                                                  style="background-image: url(static/images/greenhouse-logo_10250-3662.png);"></div>
-                                            <!--
-                                                SIGN IN
-                                            -->
                                             <h4 class="mb-4 pb-3">Sign in by entering the information below</h4>
-                                            <form action="{{ url_for('login') }}" method="post">
+                                            <form method="POST" action="/login">
                                                 {{ loginForm.hidden_tag() }}
                                                 <div class="form-group">
                                                     {{loginForm.username(placeholder="UserName", class="form-style")}}
