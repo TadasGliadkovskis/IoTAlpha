@@ -1,3 +1,5 @@
+#Author Tolani Animasahun
+
 import sys
 import RPi.GPIO as GPIO
 from time import sleep
@@ -5,6 +7,7 @@ import threading
 import os
 import logging
 import Adafruit_DHT
+import pubnub
 
 logging.basicConfig(level=logging.INFO)
 

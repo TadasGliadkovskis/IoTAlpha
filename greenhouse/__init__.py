@@ -8,7 +8,7 @@ import logging
 
 secret = uuid.uuid4()
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://admin:admin123@database-1.cmi49prbg0zg.us-east-2.rds.amazonaws.com/greenhouse'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql://root:@localhost/greenhouse'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config["SECRET_KEY"] = f"{secret}"
 db = SQLAlchemy(app)

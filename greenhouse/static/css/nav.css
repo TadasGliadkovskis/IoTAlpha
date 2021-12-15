@@ -11790,13 +11790,20 @@ table {
 
 .containertable {
 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: inherit;
+    padding: 20px;
     top: 20%;
+    position: fixed;
+    /*top: 20%;
     position: absolute;
     width: 100%;
     padding-right: var(--bs-gutter-x, 0.75rem);
     padding-left: var(--bs-gutter-x, 0.75rem);
     margin-right: auto;
-    margin-left: auto;
+    margin-left: auto;*/
     font-family: "Merriweather", serif;
     background-color: lightgreen;
 

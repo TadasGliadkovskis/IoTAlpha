@@ -95,9 +95,9 @@ def updateStats():
 
     return render_template("index.html", data=data)
 
-@app.route("/custom", methods=['GET', 'POST'])
+@app.route("/createPlant", methods=['GET', 'POST'])
 @login_required
-def custom():
+def createPlant():
 
     user_id = session.get('user_id')
     user = User.query.filter_by(user_id=user_id).first()
@@ -122,7 +122,7 @@ def custom():
             db.session.commit()  # Commits all changes
             return redirect(url_for('myPlants'))
 
-    return render_template("custom.html", form=form)
+    return render_template("createPlant.html", form=form)
 
 
 @app.route("/index")
