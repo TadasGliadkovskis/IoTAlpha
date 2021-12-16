@@ -11,7 +11,7 @@ myPlants page
 <!--<a href="{{ url_for('index')}}"> index</a>-->
 <!--<link href="./static/css/addPage.css" rel="stylesheet"/>-->
 
-<div class="containertable">
+<!--<div class="containertable">-->
     <section>
         <!-- display a table of players -->
         <h1>My Plants</h1>
@@ -20,11 +20,11 @@ myPlants page
                 <th>Plant Name</th>
                 <th>Last Watered</th>
                 <th>Day Planted</th>
-                <th>Temperature</th>
-                <th>Humidity</th>
+<!--                <th>Temperature</th>-->
+<!--                <th>Humidity</th>-->
                 <th>Condition</th>
                 <th>Refresh</th>
-                <th>Inspect</th>
+<!--                <th>Inspect</th>-->
             </tr>
 <!--            <tr>-->
             {% for plant in plants %}
@@ -35,11 +35,11 @@ myPlants page
                 <td>{{plant.plant_name}}</td>
                 <td>{{plant.watered}}</td>
                 <td>{{plant.planted}}</td>
-                <td>{{plant.Ideal_higher_temperature}}</td>
-                <td>{{plant.Ideal_humidity}}</td>
+<!--                <td>{{plant.Ideal_higher_temperature}}</td>-->
+<!--                <td>{{plant.Ideal_humidity}}</td>-->
                 <td><img src="../static/images/Smile-PNG-Images.png" width="50px" height="50px">
                     <td> <button onClick="window.location.reload();">Refresh</button></td>
-                <td><button onClick="window.location.reload();">Refresh</button></td>
+<!--                <td><button onClick="window.location.reload();">Refresh</button></td>-->
 <!--                <td>{{plant.Ideal_soil_moisture}}</td>-->
 <!--                <td>-->
 <!--&lt;!&ndash;                <input id="water_button" type="submit" value="water" onclick="handleClick(this);">&ndash;&gt;-->
@@ -48,7 +48,7 @@ myPlants page
             {% endfor %}
         </table>
     </section>
-</div>
+<!--</div>-->
 {% endif %}
 {% endblock %}
 
