@@ -7968,7 +7968,9 @@ fieldset:disabled .btn {
 
 .text-secondary {
   --bs-text-opacity: 1;
+/*
   color: rgba(var(--bs-secondary-rgb), var(--bs-text-opacity)) !important;
+*/
 }
 
 .text-success {
@@ -11542,8 +11544,9 @@ html {
   padding: 6rem 0;
 }*/
 .page-section .page-section-heading {
-  font-size: 2.25rem;
+  font-size: 5rem;
   line-height: 2rem;
+  color: lightgreen;
 }
 @media (min-width: 992px) {
   .page-section .page-section-heading {
@@ -11901,10 +11904,12 @@ body{
 	overflow-x: hidden;
 }
 
-section
+#myPlant
 {
-/*position: absolute;
+
+    position: absolute;
     top: 20%;
-    background-color: #2d5630;*/
+    background-color: #2d5630;
+    text-decoration: white;
 }
 
