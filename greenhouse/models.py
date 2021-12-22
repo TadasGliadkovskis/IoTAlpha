@@ -7,6 +7,10 @@ from greenhouse import bcrypt
 
 @login_manager.user_loader
 def load_user(user_id):
+    print("loading user called")
+    user = users.query.filter_by(user_id=user_id).first()
+    id1 = user.user_id
+    print(id1)
     return users.query.get(user_id)
 
 class users(db.Model, UserMixin):

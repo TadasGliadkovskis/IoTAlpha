@@ -1,6 +1,4 @@
 #Author: Rodions Barannikovs
-
-
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, validators, SubmitField, DateField, SelectField
 from wtforms.validators import DataRequired, ValidationError

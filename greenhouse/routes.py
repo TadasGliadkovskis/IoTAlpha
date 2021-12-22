@@ -13,10 +13,8 @@ from types import SimpleNamespace
 def dashboard():
     return render_template("dashboard.html")
 
-
 alive = 0
 data = {}
-
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -43,7 +41,6 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-
     register_form = RegistrationForm()
     login_form = LoginForm()
     if current_user.is_authenticated:
@@ -95,9 +92,9 @@ def updateStats():
 
     return render_template("index.html", data=data)
 
-@app.route("/createPlant", methods=['GET', 'POST'])
 @login_required
-def custom():
+@app.route("/createPlant", methods=['GET', 'POST'])
+def createPlant():
 
     user_id = session.get('user_id')
     user = User.query.filter_by(user_id=user_id).first()
@@ -122,7 +119,7 @@ def custom():
             db.session.commit()  # Commits all changes
             return redirect(url_for('myPlants'))
 
-    return render_template("custom.html", form=form)
+    return render_template("createPlant.html", form=form)
 
 
 @app.route("/index")
@@ -134,9 +131,7 @@ def index():
 @app.route('/myPlants')
 @login_required
 def myPlants():
-
     user_idSession = session.get('user_id')
-    print(user_idSession)
     user = User.query.filter_by(user_id=user_idSession).first()
     user_id = user.user_id
     plants = {}
@@ -149,7 +144,6 @@ def myPlants():
 def deletePlant():
     id = request.data
     plant = json.loads(id, object_hook=lambda d: SimpleNamespace(**d))
-    print(plant.id)
     # plant = user_plant.query.filter(plant_id = id).delete()
 
 
