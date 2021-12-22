@@ -25,15 +25,16 @@ table {
     border: 1px solid black;
     border-collapse: collapse;
     background-color: #2d5630;
-
-    td,
+    /*td,
     th {
         border: 1px solid black;
         padding: 0.2em 0.5em 0.2em 0.5em;
         vertical-align: top;
         text-align: left;
-    }
+    }*/
 }
+
+
 
 
 

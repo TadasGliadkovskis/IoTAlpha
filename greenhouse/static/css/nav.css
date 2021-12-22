@@ -93,7 +93,9 @@ body {
 
 
 h1 {
-color: black;
+color: white;
+    text-align: center;
+    font-size: 40px;
 }
 
 
@@ -7968,7 +7970,9 @@ fieldset:disabled .btn {
 
 .text-secondary {
   --bs-text-opacity: 1;
+/*
   color: rgba(var(--bs-secondary-rgb), var(--bs-text-opacity)) !important;
+*/
 }
 
 .text-success {
@@ -11542,8 +11546,9 @@ html {
   padding: 6rem 0;
 }*/
 .page-section .page-section-heading {
-  font-size: 2.25rem;
+  font-size: 5rem;
   line-height: 2rem;
+  color: lightgreen;
 }
 @media (min-width: 992px) {
   .page-section .page-section-heading {
@@ -11790,13 +11795,20 @@ table {
 
 .containertable {
 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: inherit;
+    padding: 20px;
     top: 20%;
+    position: fixed;
+    /*top: 20%;
     position: absolute;
     width: 100%;
     padding-right: var(--bs-gutter-x, 0.75rem);
     padding-left: var(--bs-gutter-x, 0.75rem);
     margin-right: auto;
-    margin-left: auto;
+    margin-left: auto;*/
     font-family: "Merriweather", serif;
     background-color: lightgreen;
 
@@ -11892,5 +11904,14 @@ body{
 	color: white;
 	background-image: url(../images/dirt.jpg);
 	overflow-x: hidden;
+}
+
+#myPlant
+{
+
+    position: absolute;
+    top: 20%;
+    background-color: #2d5630;
+    text-decoration: white;
 }
 

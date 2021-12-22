@@ -1,10 +1,11 @@
-#Authors: Rodions Barannikovs
+#Author: Rodions Barannikovs
+
 from flask import render_template, redirect, url_for, request, flash, session
 from greenhouse.forms import RegistrationForm, LoginForm, plantForm
 import uuid
 from greenhouse import db, bcrypt, app
 from greenhouse.models import users as User, plant_readings,user_plant, plants as custom_plant
-from flask_login import login_user, current_user, logout_user, login_required, login_manager
+from flask_login import login_user, current_user, logout_user, login_required
 import json
 from types import SimpleNamespace
 
@@ -12,8 +13,10 @@ from types import SimpleNamespace
 def dashboard():
     return render_template("dashboard.html")
 
+
 alive = 0
 data = {}
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -21,6 +24,8 @@ def register():
     users_id = uuid.uuid4().int
     login_form = LoginForm()
     form = RegistrationForm()
+    if current_user.is_authenticated:
+        return redirect(url_for('myPlants'))
     # Check the request method and validate the submit data
     if request.method == 'POST' and form.validate_on_submit():
         new_user = User(
@@ -41,12 +46,13 @@ def login():
 
     register_form = RegistrationForm()
     login_form = LoginForm()
-
+    if current_user.is_authenticated:
+        return redirect(url_for('myPlants'))
     if login_form.validate_on_submit():
         user = User.query.filter_by(username=login_form.username.data).first()
         if user and bcrypt.check_password_hash(user.password, login_form.password.data):
             login_user(user)
-            session['userid'] = user.user_id
+            session['user_id'] = user.user_id
             return redirect(url_for("myPlants"))
         else:
             flash('login unsuccessful check username and password')
@@ -64,9 +70,9 @@ def account():
 
 @app.route("/", methods=['GET', 'POST'])
 def loginPage2():
-        register_form = RegistrationForm()
-        login_form = LoginForm()
-        return render_template("loginPage2.html", loginForm=login_form, registerForm=register_form)
+    register_form = RegistrationForm()
+    login_form = LoginForm()
+    return render_template("loginPage2.html", loginForm=login_form, registerForm=register_form)
 
 
 @app.route("/updateStats", methods=['GET', "POST"])
@@ -79,7 +85,7 @@ def updateStats():
                 plant_id=plant.plant_id,
                 temperature=plant.temperature,
                 humidity=plant.humidity,
-                brightness=plant.brightness,
+                brightness =plant.brightness,
                 soil_moisture=plant.soil_moisture,
             )
             db.session.add(readings)
@@ -89,25 +95,21 @@ def updateStats():
 
     return render_template("index.html", data=data)
 
-@app.route("/custom", methods=['GET', 'POST'])
+@app.route("/createPlant", methods=['GET', 'POST'])
 @login_required
 def custom():
-    plant_id = uuid.uuid4().int
-    user_id = session.get('userid')
-    print(user_id)
+
+    user_id = session.get('user_id')
     user = User.query.filter_by(user_id=user_id).first()
     form = plantForm(request.form)
     if user:
         if request.method == 'POST' and form.validate_on_submit():
             new_plant = user_plant(
-                plant_id = plant_id,
                 user_id=user.user_id,
                 plant_name=form.plant_name.data,
                 planted=form.date_planted.data,
             )
             cust = custom_plant (
-                plant_id = plant_id,
-                user_id = user_id,
                 plant_name = form.plant_name.data,
                 ideal_lower_temperature = form.minTemp.data,
                 ideal_higher_temperature = form.maxTemp.data,
@@ -119,6 +121,7 @@ def custom():
             db.session.add(cust)
             db.session.commit()  # Commits all changes
             return redirect(url_for('myPlants'))
+
     return render_template("custom.html", form=form)
 
 
@@ -127,25 +130,26 @@ def custom():
 def index():
     return render_template("index.html")
 
+
 @app.route('/myPlants')
 @login_required
 def myPlants():
-    user_id = session.get('userid')
+
+    user_idSession = session.get('user_id')
+    print(user_idSession)
+    user = User.query.filter_by(user_id=user_idSession).first()
+    user_id = user.user_id
     plants = {}
-    plants = user_plant.query.filter_by(user_id=user_id).all()
-
-    plants1 = {}
-    plants1 = db.session.query(
-            user_plant, custom_plant).join(custom_plant, custom_plant.plant_id == user_plant.plant_id).all()
-
-   # result = db.session.query(custom_plant).join(plants).filter(plants.plant_id == custom_plant.plant_id).all()
-
+    if user:
+        plants = user_plant.query.filter_by(user_id=user_id).all()
+        print(plants)
     return render_template("myPlants.html", plants=plants)
 
 @app.route('/deletePlant', methods=['GET', 'POST'])
 def deletePlant():
     id = request.data
     plant = json.loads(id, object_hook=lambda d: SimpleNamespace(**d))
+    print(plant.id)
     # plant = user_plant.query.filter(plant_id = id).delete()
 
 

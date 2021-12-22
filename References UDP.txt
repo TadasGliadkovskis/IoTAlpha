@@ -1,0 +1,5 @@
+Website used for Index page and navigation bar:
+https://startbootstrap.com/theme/freelancer
+
+Website used for log in and register page:
+https://codepen.io/ig_design/full/KKVQpVP
