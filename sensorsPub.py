@@ -16,13 +16,15 @@ from pubnub.pnconfiguration import PNConfiguration
 from pubnub.pubnub import PubNub
 
 pnconfig = PNConfiguration()
-pnconfig.subscribe_key = os.getenv("PUBNUB_SUBSCRIBE") #These have to be set up as environment variables inside Pi
-pnconfig.publish_key = os.getenv("PUBNUB_PUBLISH") #These have to be set up as environment variables inside Pi
+#pnconfig.cipher_key = "tadasCipher"
+#pnconfig.auth_key = "TG-raspi"
+pnconfig.subscribe_key = "sub-c-5180f24a-546d-11ec-931a-1addb9510060" #These have to be set up as environment variables inside Pi
+pnconfig.publish_key = "pub-c-23f0b7bb-05d1-4e28-ac32-f35c4b8a805c" #These have to be set up as environment variables inside Pi
 pnconfig.uuid = '02060d4f-508a-4ca2-b1d2-a1d22ee5cc48' #
 pubnub = PubNub(pnconfig)
 
 my_channel = "tadas-pi-channel"
-data = {}
+user_name = ""
 publish_message = {}
 
 GPIO.setwarnings(False)
@@ -41,13 +43,19 @@ GPIO.setup(led,GPIO.OUT)
 
 
 def call_sensors():
-      print()
-      check_temp(5)
-      check_soil(5)
-      check_for_light(5)
-      publish_to_pub()
-      sleep(5)
+    RUN_PROGRAM = True
+    while RUN_PROGRAM:
+        check_temp(3)
+        check_soil(3)
+        check_for_light(3)
+        publish_to_pub()
+        sleep(1800)
 
+def refresh_data():
+    check_temp(3)
+    check_soil(3)
+    check_for_light(3)
+    publish_to_pub()
 
 #test dht22 for 10 seconds
 def check_temp(seconds):
@@ -89,10 +97,12 @@ def check_for_light(seconds):
       
 
 def publish_to_pub():
+    global user_name
     global publish_message
     now = datetime.now()
-    current_time = now.strftime("%d-%M-%Y %H:%M")
+    current_time = now.strftime("%d-%m-%Y %H:%M")
     publish_message.update({"time":current_time})
+    publish_message.update({"user":user_name})
     publish(my_channel, publish_message)
 
 
@@ -124,6 +134,7 @@ class MySubscribeCallback(SubscribeCallback):
             # UI / internal notifications, etc
             print("success connected to PubNub")
             pubnub.publish().channel(my_channel).message('Raspberry Pi Connected').pn_async(my_publish_callback)
+            
             sleep(1)
         elif status.category == PNStatusCategory.PNReconnectedCategory:
             pass
@@ -150,10 +161,9 @@ class MySubscribeCallback(SubscribeCallback):
 
 
     def handle_event(self, msg):
-        global data
         event_data= msg["event"]
         if "refresh" == event_data:
-            call_sensors()
+            refresh_data()
 
 if __name__ == '__main__':
     sensors_thread = threading.Thread(target = call_sensors)
