@@ -21,8 +21,6 @@ def register():
     users_id = uuid.uuid4().int
     login_form = LoginForm()
     form = RegistrationForm()
-    if current_user.is_authenticated:
-        return redirect(url_for('myPlants'))
     # Check the request method and validate the submit data
     if request.method == 'POST' and form.validate_on_submit():
         new_user = User(
@@ -141,8 +139,6 @@ def myPlants():
             user_plant, custom_plant).join(custom_plant, custom_plant.plant_id == user_plant.plant_id).all()
 
    # result = db.session.query(custom_plant).join(plants).filter(plants.plant_id == custom_plant.plant_id).all()
-
-    print(plants1)
 
     return render_template("myPlants.html", plants=plants)
 

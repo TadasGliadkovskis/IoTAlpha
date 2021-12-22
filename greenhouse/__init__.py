@@ -18,6 +18,6 @@ login_manager.login_view = 'login'
 from greenhouse import routes
 
 if __name__ == '__main__':
-    app.debug = True
+    # app.debug = True
     app.run()
 
