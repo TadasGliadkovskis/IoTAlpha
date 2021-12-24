@@ -1,7 +1,7 @@
 # IoTAlpha
 IoT module alpha CA2
 
-Master doesn't have files due to merge conflict on "rodions" branch
+Master doesn't have all files due to merge conflict on "rodions" branch
 
 
 - Tadas Gliadkovskis (D00229061)
