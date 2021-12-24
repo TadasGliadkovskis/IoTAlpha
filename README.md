@@ -1,7 +1,7 @@
 # IoTAlpha
 IoT module alpha CA2
 
-to start the project: python run.py
+Master doesn't have files due to merge conflict on "rodions" branch
 
 
 - Tadas Gliadkovskis (D00229061)
