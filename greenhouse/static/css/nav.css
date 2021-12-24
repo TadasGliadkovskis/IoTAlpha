@@ -98,6 +98,15 @@ color: white;
     font-size: 40px;
 }
 
+h3 {
+margin-top: 6% !important;
+    font-size: 4rem;
+    line-height: 18rem;
+    color: white;
+}
+
+
+
 
 abbr[title],
 abbr[data-bs-original-title] {
@@ -11909,9 +11918,10 @@ body{
 #myPlant
 {
 
-    position: absolute;
-    top: 20%;
-    background-color: #2d5630;
+    position: fixed;
+    top: 40%;
     text-decoration: white;
 }
+
+
 

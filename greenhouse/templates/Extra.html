@@ -11,6 +11,8 @@ Home page
 <!--<a href="{{ url_for('loginPage2')}}"> login</a>-->
 <script defer src="static/js/pubnub.js"></script>
 <section class="page-section portfolio" id="portfolio">
+        <link href="./static/css/nav2.css" rel="stylesheet"/>
+
     <div class="containerIndex">
         <!-- Portfolio Section Heading-->
         <h2 id="h2" class="page-section-heading text-center text-uppercase text-secondary mb-0">Home</h2>
@@ -94,26 +96,31 @@ Home page
                                 <div class="divider-custom-line"></div>
                             </div>
                             <p style="color:black">Allow up to 10 seconds to refresh</p>
-                            <table>
-                                <tr>
-                                    <th>Temperature</th>
-                                    <th>Humidity</th>
-                                    <th>Soil</th>
-                                    <th>Brightness</th>
-                                    <th>Time</th>
-                                    <th>Update</th>
+                            <table role="table">
+                                <thead role="rowgroup">
+                                <tr role="row">
+                                    <th role="columnheader">Temperature</th>
+                                    <th role="columnheader">Humidity</th>
+                                    <th role="columnheader">Soil</th>
+                                    <th role="columnheader">Brightness</th>
+                                    <th role="columnheader">Time</th>
+                                    <th role="columnheader">Update</th>
                                 </tr>
-                                <tr>
+                                </thead>
+                                <tbody role="rowgroup">
+                                <tr role="row">
                                     <td id="temperature">00</td>
                                     <td id="humidity">00</td>
                                     <td id="soil">00</td>
-                                    <td id="brightness"> 00</td>
+                                    <td id="brightness">00</td>
                                     <td id="time">00</td>
                                     <td>
                                         <button onClick="handleClick(this)">Update</button>
                                     </td>
                                 </tr>
+                                </tbody>
                             </table>
+
                             <button onClick="window.location.reload();" data-bs-dismiss="modal">
                                 <i class="fas fa-times fa-fw"></i>
                                 Close Window
@@ -125,6 +132,3 @@ Home page
         </div>
     </div>
 </div>
-
-
-{% endblock %}

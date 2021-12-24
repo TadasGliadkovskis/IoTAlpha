@@ -11,7 +11,7 @@ Home page
 <!--<a href="{{ url_for('loginPage2')}}"> login</a>-->
 <script defer src="static/js/pubnub.js"></script>
 <section class="page-section portfolio" id="portfolio">
-        <link href="./static/css/nav2.css" rel="stylesheet"/>
+    <link href="./static/css/nav2.css" rel="stylesheet"/>
 
     <div class="containerIndex">
         <!-- Portfolio Section Heading-->
@@ -38,15 +38,16 @@ Home page
 
             <!-- Portfolio Item 2-->
             <div class="col-md-6 col-lg-4 mb-5">
-                <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal2">
+<!--                <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal2">-->
                     <div
                             class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                         <!--                            <div class="portfolio-item-caption-content text-center text-white"><i-->
                         <!--                                    class="fas fa-plus fa-3x"></i>-->
 
                         <!--                            </div>-->
-                    </div>
-                    <a href="{{ url_for('myPlants')}}">
+                        <a href="{{ url_for('myPlants')}}">
+<!--                    </div>-->
+<!--                    <a href="{{ url_for('myPlants')}}">-->
                         <img class="img-fluid" src="../static/images/plantsCartoon.png" alt="..."/>
                         <h1>My Plants</h1>
                     </a>
@@ -105,8 +106,6 @@ Home page
                                     <th role="columnheader">Brightness</th>
                                     <th role="columnheader">Time</th>
                                     <th role="columnheader">Update</th>
-
-
                                 </tr>
                                 </thead>
                                 <tbody role="rowgroup">
@@ -116,7 +115,7 @@ Home page
                                     <td id="soil">00</td>
                                     <td id="brightness">00</td>
                                     <td id="time">00</td>
-                                     <td>
+                                    <td>
                                         <button onClick="handleClick(this)">Update</button>
                                     </td>
                                 </tr>
@@ -134,6 +133,54 @@ Home page
         </div>
     </div>
 </div>
+
+
+<!-- Portfolio Modal 2-->
+<!--<div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" aria-labelledby="portfolioModal2"
+     aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center pb-5">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            &lt;!&ndash; Portfolio Modal - Title&ndash;&gt;
+                            <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Tasty Cake</h2>
+                            &lt;!&ndash; Icon Divider&ndash;&gt;
+                            <div class="divider-custom">
+                                <div class="divider-custom-line"></div>
+                                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                <div class="divider-custom-line"></div>
+                            </div>
+                            <p style="color:black">Allow up to 10 seconds to refresh</p>
+                            <table role="table">
+                                <thead role="rowgroup">
+                                <tr role="row">
+                                    <th role="columnheader">Plant Nane</th>
+                                    <th role="columnheader">Last Watered</th>
+                                    <th role="columnheader">Day Planted</th>
+                                    <th role="columnheader">Temperature</th>
+                                    <th role="columnheader">Humidity</th>
+                                    <th role="columnheader">Condition</th>
+                                    <th role="columnheader">Refresh</th>
+                                </tr>
+                                </thead>
+                            </table>
+
+                            <button class="btn btn-primary" href="#!" data-bs-dismiss="modal">
+                                <i class="fas fa-times fa-fw"></i>
+                                Close Window
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
 
 
 {% endblock %}
