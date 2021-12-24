@@ -18,8 +18,8 @@ from pubnub.pubnub import PubNub
 pnconfig = PNConfiguration()
 #pnconfig.cipher_key = "tadasCipher"
 #pnconfig.auth_key = "TG-raspi"
-pnconfig.subscribe_key = "sub-c-5180f24a-546d-11ec-931a-1addb9510060" #These have to be set up as environment variables inside Pi
-pnconfig.publish_key = "pub-c-23f0b7bb-05d1-4e28-ac32-f35c4b8a805c" #These have to be set up as environment variables inside Pi
+pnconfig.subscribe_key = os.getenv("PUB_SUB_KEY")
+pnconfig.publish_key = os.getenv("PUB_PUB_KEY")
 pnconfig.uuid = '02060d4f-508a-4ca2-b1d2-a1d22ee5cc48' #
 pubnub = PubNub(pnconfig)
 
