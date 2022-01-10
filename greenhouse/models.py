@@ -10,7 +10,6 @@ def load_user(user_id):
     print("loading user called")
     user = users.query.filter_by(user_id=user_id).first()
     id1 = user.user_id
-    print(id1)
     return users.query.get(user_id)
 
 class users(db.Model, UserMixin):
@@ -33,6 +32,7 @@ class users(db.Model, UserMixin):
 
 
 class plants(db.Model):
+    plant_id = db.Column(db.String, primary_key=True)
     plant_name = db.Column(db.String, primary_key=True, nullable=False)
     ideal_lower_temperature = db.Column(db.Float, nullable=False)
     ideal_higher_temperature = db.Column(db.Float, nullable=False)

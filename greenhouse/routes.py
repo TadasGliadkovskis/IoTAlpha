@@ -96,17 +96,20 @@ def updateStats():
 @app.route("/createPlant", methods=['GET', 'POST'])
 def createPlant():
 
+    plant_id = uuid.uuid4().int
     user_id = session.get('user_id')
     user = User.query.filter_by(user_id=user_id).first()
     form = plantForm(request.form)
     if user:
         if request.method == 'POST' and form.validate_on_submit():
             new_plant = user_plant(
+                plant_id=plant_id,
                 user_id=user.user_id,
                 plant_name=form.plant_name.data,
                 planted=form.date_planted.data,
             )
             cust = custom_plant (
+                plant_id =plant_id,
                 plant_name = form.plant_name.data,
                 ideal_lower_temperature = form.minTemp.data,
                 ideal_higher_temperature = form.maxTemp.data,
@@ -137,14 +140,24 @@ def myPlants():
     plants = {}
     if user:
         plants = user_plant.query.filter_by(user_id=user_id).all()
-        print(plants)
     return render_template("myPlants.html", plants=plants)
 
 @app.route('/deletePlant', methods=['GET', 'POST'])
 def deletePlant():
     id = request.data
-    plant = json.loads(id, object_hook=lambda d: SimpleNamespace(**d))
-    # plant = user_plant.query.filter(plant_id = id).delete()
+    user_idSession = session.get('user_id')
+
+    id2 = json.loads(id, object_hook=lambda d: SimpleNamespace(**d))
+    print(id2)
+    plant =  user_plant.query.filter_by(plant_id=id2).first()
+    db.session.delete(plant)
+    db.session.commit()
+    user = User.query.filter_by(user_id=user_idSession).first()
+    user_id = user.user_id
+    plants = {}
+    if user:
+        plants = user_plant.query.filter_by(user_id=user_id).all()
+    return render_template("myPlants.html", plants=plants)
 
 
 @app.route('/keep_alive')

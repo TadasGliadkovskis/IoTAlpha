@@ -105,12 +105,7 @@ function publishUpdate(data, channel)
         );
 }
 
-//function deletePlant(plant)
-//{
-//    console.log(plant.value)
-//    request.open("POST", "deletePlant", true);
-//
-//}
+
 function handleClick()
 {
 	var ckbStatus = new Object();
@@ -120,4 +115,11 @@ function handleClick()
 	publishUpdate(event, myChannel);
 	console.log(event);
 	 console.log("sent status")
+}
+
+function handleDelete (plant_id)
+{
+const n = BigInt(plant_id).toString();
+request.open("POST", "deletePlant", true);
+	request.send(n);
 }
